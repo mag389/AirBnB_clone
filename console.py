@@ -3,6 +3,8 @@
 import cmd
 import inspect
 from models.base_model import BaseModel
+import shlex
+
 
 
 class HBNBCommand(cmd.Cmd):
@@ -53,7 +55,7 @@ class HBNBCommand(cmd.Cmd):
             var = eval(l[0] + "()")
             print(var.id)
             HBNBCommand.uids[var.id] = var
-            print(var)
+#            print(var)
 # save to json file
         except NameError:
             print("**class doesn't exist **")
@@ -73,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         if l[1] in HBNBCommand.uids and \
-            type(HBNBCommand.uids[l[1]]).__name__ == l[0]:
+                type(HBNBCommand.uids[l[1]]).__name__ == l[0]:
             print(HBNBCommand.uids[l[1]])
             return
         else:
@@ -94,6 +96,12 @@ class HBNBCommand(cmd.Cmd):
             return
         if len(l) < 2:
             print("** instance id missing **")
+            return
+        if l[1] in HBNBCommand.uids and \
+                type(HBNBCommand.uids[l[1]]).__name__ == l[0]:
+            HBNBCommand.uids.pop(l[1])
+        else:
+            print("** no instance found **")
 #        check if instance id exist
 #        destroy associated object
 
@@ -118,6 +126,32 @@ class HBNBCommand(cmd.Cmd):
 #               #print(type(HBNBCommand.uids[x]).__name__)
 #               #print(l[0])
             print(listy)
+
+    def do_update(self, line):
+        """updates an attribute of the object, us in form of
+        update <class> <id> <attribute name> <new value>
+        """
+        l = shlex.split(line)
+        if len(l) < 1:
+            print("** class name missing **")
+            return
+        if l[0] not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
+        if len(l) < 2:
+            print("** instance id missing **")
+            return
+        if l[1] not in HBNBCommand.uids or \
+                type(HBNBCommand.uids[l[1]]).__name__ != l[0]:
+            print("** no instance found **")
+            return
+        if len(l) < 3:
+            print("** attribute name missing **")
+            return
+        if len(l) < 4:
+            print("** value missing **")
+            return
+        setattr(HBNBCommand.uids[l[1]], l[2], l[3])
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
