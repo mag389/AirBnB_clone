@@ -4,7 +4,7 @@
 import uuid
 from datetime import datetime as dt
 import json
-
+from models.__init__ import storage
 
 class BaseModel():
     """ Base Model Class """
@@ -29,6 +29,7 @@ class BaseModel():
             self.id = str(uuid.uuid4())
             self.created_at = dt.now()
             self.updated_at = self.created_at
+            storage.new(self)
 
     def __str__(self):
         """ String representation of the instance """
@@ -38,6 +39,7 @@ class BaseModel():
     def save(self):
         """ Saves current datetime to updated_at """
         self.updated_at = dt.now()
+        storage.save()
 
     def to_dict(self):
         """ Returns a dictionary of instance attributes from __dict__ """
