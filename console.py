@@ -3,6 +3,7 @@
 import cmd
 import inspect
 from models.base_model import BaseModel
+from models.user import User
 import shlex
 from models import storage
 
@@ -57,6 +58,11 @@ class HBNBCommand(cmd.Cmd):
 
         if l[0] == "BaseModel":
             obj = BaseModel()
+            print(obj.id)
+            storage.new(obj)
+            storage.save()
+        if l[0] == "User":
+            obj = User()
             print(obj.id)
             storage.new(obj)
             storage.save()
@@ -145,8 +151,8 @@ class HBNBCommand(cmd.Cmd):
         if len(l) < 2:
             print("** instance id missing **")
             return
-        if l[1] not in HBNBCommand.uids or \
-                type(HBNBCommand.uids[l[1]]).__name__ != l[0]:
+        key = l[0] + "." + l[1]
+        if key not in storage.all().keys():
             print("** no instance found **")
             return
         if len(l) < 3:
@@ -155,7 +161,11 @@ class HBNBCommand(cmd.Cmd):
         if len(l) < 4:
             print("** value missing **")
             return
-        setattr(HBNBCommand.uids[l[1]], l[2], l[3])
+
+        setattr(storage.all()[key], l[2],
+                type(getattr(storage.all()[key], l[2]))(l[3]))
+        storage.save()
+        
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

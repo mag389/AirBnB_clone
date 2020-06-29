@@ -36,9 +36,13 @@ class FileStorage():
         try:
             with open(self.__file_path, "r") as file:
                 list_of_dicts = json.loads(file.read())
-            from models.base_model import BaseModel
+            
             for obj_dict in list_of_dicts:
                 if obj_dict['__class__'] == "BaseModel":
+                    from models.base_model import BaseModel
                     self.new(BaseModel(**obj_dict))
+                if obj_dict['__class__'] == "User":
+                    from models.user import User
+                    self.new(User(**obj_dict))
         except:
             pass

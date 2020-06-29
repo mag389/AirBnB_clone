@@ -1,13 +1,16 @@
-#!usr/bin/python3
-""" Base Model Module """
+#!/usr/bin/python3
+""" User module """
 
+from models.base_model import BaseModel
 import uuid
 from datetime import datetime as dt
-import json
 
-
-class BaseModel():
-    """ Base Model Class """
+class User(BaseModel):
+    """ User class """
+    email = ""
+    password = ""
+    first_name = ""
+    last_name = ""
 
     def __init__(self, *args, **kwargs):
         """ Init """
@@ -31,25 +34,3 @@ class BaseModel():
             self.updated_at = self.created_at
             from models.__init__ import storage
             storage.new(self)
-
-    def __str__(self):
-        """ String representation of the instance """
-        return ("[{}] ({}) {}".format(type(self).__name__, self.id,
-                                      self.__dict__))
-
-    def save(self):
-        """ Saves current datetime to updated_at """
-        self.updated_at = dt.now()
-        from models.__init__ import storage
-        storage.save()
-
-    def to_dict(self):
-        """ Returns a dictionary of instance attributes from __dict__ """
-        att_dict = {}
-        for key, value in self.__dict__.items():
-            if key == 'created_at' or key == 'updated_at':
-                att_dict[key] = value.isoformat()
-            else:
-                att_dict[key] = value
-        att_dict['__class__'] = type(self).__name__
-        return att_dict
