@@ -21,12 +21,15 @@ class HBNBCommand(cmd.Cmd):
         """
 #        #serialize all objects form json
 #        # add dictionary entry for each one with uid as key
+#        I think this is all handled already? keeping the function here 
+#        in case we think of something to include on start-up
         return
 
     def postloop(self):
         """closes out the program, saves to json storage etc
         """
 #        #implement later
+#       Also dunno if anything needs to go in here, saving is done periodically
         print("ending console")
         pass
 
@@ -51,15 +54,15 @@ class HBNBCommand(cmd.Cmd):
         if len(l) < 1:
             print("** class name missing **")
             return
-#        #if not a class print that
-        try:
-            var = eval(l[0] + "()")
-            print(var.id)
-            HBNBCommand.uids[var.id] = var
-#            print(var)
-# save to json file
-        except NameError:
+
+        if l[0] == "BaseModel":
+            obj = BaseModel()
+            print(obj.id)
+            storage.new(obj)
+            storage.save()
+        else:
             print("**class doesn't exist **")
+
 
     def do_show(self, line):
         """prints string representation of object based on ID
@@ -75,9 +78,9 @@ class HBNBCommand(cmd.Cmd):
         if len(l) < 2:
             print("** instance id missing **")
             return
-        if l[1] in HBNBCommand.uids and \
-                type(HBNBCommand.uids[l[1]]).__name__ == l[0]:
-            print(HBNBCommand.uids[l[1]])
+        key = l[0] + "." + l[1]
+        if key in storage.all().keys():
+            print(storage.all()[key])
             return
         else:
             print("** no instance found **")
@@ -98,9 +101,10 @@ class HBNBCommand(cmd.Cmd):
         if len(l) < 2:
             print("** instance id missing **")
             return
-        if l[1] in HBNBCommand.uids and \
-                type(HBNBCommand.uids[l[1]]).__name__ == l[0]:
-            HBNBCommand.uids.pop(l[1])
+        key = l[0] + "." + l[1]
+        if key in storage.all().keys():
+            storage.all().pop(key)
+            storage.save()
         else:
             print("** no instance found **")
 #        check if instance id exist
@@ -110,27 +114,22 @@ class HBNBCommand(cmd.Cmd):
         """Prints all object of certain type, or all objects
         """
         l = line.split()
-# for now just all objects, incorrect form
-        listy = []
+        obj_list = []
+
         if len(l) < 1:
-            for x in HBNBCommand.uids:
-                listy.append(str(HBNBCommand.uids[x]))
-            print(listy)
+            for obj in storage.all().values():
+                obj_list.append(str(obj))
+            print(obj_list)
         else:
             classes = HBNBCommand.classes
             if l[0] not in classes:
                 print("** class doesn't exist **")
                 return
-            for x in HBNBCommand.uids:
-                if type(HBNBCommand.uids[x]).__name__ == l[0]:
-                    listy.append(str(HBNBCommand.uids[x]))
-#               #print(type(HBNBCommand.uids[x]).__name__)
-#               #print(l[0])
-            print("HO")
-            print(listy)
-            print("HI")
-            print(str(storage.all()))
-            print("H")
+            for key in storage.all().keys():
+                if key[0:len(l[0])] == l[0]:
+                    obj_list.append(str(storage.all()[key]))
+            print(obj_list)
+
 
     def do_update(self, line):
         """updates an attribute of the object, us in form of
@@ -160,3 +159,4 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
+
