@@ -4,6 +4,7 @@ import cmd
 import inspect
 from models.base_model import BaseModel
 import shlex
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -125,7 +126,11 @@ class HBNBCommand(cmd.Cmd):
                     listy.append(str(HBNBCommand.uids[x]))
 #               #print(type(HBNBCommand.uids[x]).__name__)
 #               #print(l[0])
+            print("HO")
             print(listy)
+            print("HI")
+            print(str(storage.all()))
+            print("H")
 
     def do_update(self, line):
         """updates an attribute of the object, us in form of
