@@ -6,13 +6,13 @@ from models.base_model import BaseModel
 import shlex
 
 
-
 class HBNBCommand(cmd.Cmd):
     """ the bnb console class """
 
     prompt = "(hbnb) "
     uids = {}
-    classes = ["BaseModel", "User"]
+    classes = ["BaseModel", "User", "State", "City",
+               "Amenity", "Place", "Review"]
 
     def preloop(self):
         """sets up the objects to be searchable by uid for deletion and
@@ -63,7 +63,7 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, line):
         """prints string representation of object based on ID
         """
-        classes = ['BaseModel', 'User']
+        classes = HBNBCommand.classes
         l = line.split()
         if len(l) < 1:
             print("** class name missing **")
@@ -86,7 +86,7 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id
         """
-        classes = ['BaseModel', 'User']
+        classes = HBNBCommand.classes
         l = line.split()
         if len(l) < 1:
             print("** class name missing **")
@@ -116,7 +116,7 @@ class HBNBCommand(cmd.Cmd):
                 listy.append(str(HBNBCommand.uids[x]))
             print(listy)
         else:
-            classes = ['BaseModel', 'User']
+            classes = HBNBCommand.classes
             if l[0] not in classes:
                 print("** class doesn't exist **")
                 return
