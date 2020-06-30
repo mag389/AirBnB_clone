@@ -22,7 +22,7 @@ class HBNBCommand(cmd.Cmd):
         """
 #        #serialize all objects form json
 #        # add dictionary entry for each one with uid as key
-#        I think this is all handled already? keeping the function here 
+#        I think this is all handled already? keeping the function here
 #        in case we think of something to include on start-up
         return
 
@@ -68,7 +68,6 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
         else:
             print("**class doesn't exist **")
-
 
     def do_show(self, line):
         """prints string representation of object based on ID
@@ -136,7 +135,6 @@ class HBNBCommand(cmd.Cmd):
                     obj_list.append(str(storage.all()[key]))
             print(obj_list)
 
-
     def do_update(self, line):
         """updates an attribute of the object, us in form of
         update <class> <id> <attribute name> <new value>
@@ -165,8 +163,6 @@ class HBNBCommand(cmd.Cmd):
         setattr(storage.all()[key], l[2],
                 type(getattr(storage.all()[key], l[2]))(l[3]))
         storage.save()
-        
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
-
