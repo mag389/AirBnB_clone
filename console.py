@@ -12,7 +12,6 @@ class HBNBCommand(cmd.Cmd):
     """ the bnb console class """
 
     prompt = "(hbnb) "
-    uids = {}
     classes = ["BaseModel", "User", "State", "City",
                "Amenity", "Place", "Review"]
 
@@ -20,18 +19,11 @@ class HBNBCommand(cmd.Cmd):
         """sets up the objects to be searchable by uid for deletion and
         json serialization later
         """
-#        #serialize all objects form json
-#        # add dictionary entry for each one with uid as key
-#        I think this is all handled already? keeping the function here
-#        in case we think of something to include on start-up
         return
 
     def postloop(self):
         """closes out the program, saves to json storage etc
         """
-#        #implement later
-#       Also dunno if anything needs to go in here, saving is done periodically
-        print("ending console")
         pass
 
     def do_quit(self, line):
@@ -89,8 +81,6 @@ class HBNBCommand(cmd.Cmd):
             return
         else:
             print("** no instance found **")
-# check if instance id exists
-# if so print object
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id
@@ -112,8 +102,6 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
         else:
             print("** no instance found **")
-#        check if instance id exist
-#        destroy associated object
 
     def do_all(self, line):
         """Prints all object of certain type, or all objects
