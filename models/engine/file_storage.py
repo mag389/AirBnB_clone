@@ -36,7 +36,7 @@ class FileStorage():
         try:
             with open(self.__file_path, "r") as file:
                 list_of_dicts = json.loads(file.read())
-            
+
             for obj_dict in list_of_dicts:
                 if obj_dict['__class__'] == "BaseModel":
                     from models.base_model import BaseModel
