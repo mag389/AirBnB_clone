@@ -4,6 +4,11 @@ import cmd
 import inspect
 from models.base_model import BaseModel
 from models.user import User
+from models.amenity import Amenity
+from models.city import City
+from models.state import State
+from models.review import Review
+from models.place import Place
 import shlex
 from models import storage
 
@@ -55,6 +60,31 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
         elif l[0] == "User":
             obj = User()
+            print(obj.id)
+            storage.new(obj)
+            storage.save()
+        elif l[0] == "Amenity":
+            obj = Amenity()
+            print(obj.id)
+            storage.new(obj)
+            storage.save()
+        elif l[0] == "Review":
+            obj = Review()
+            print(obj.id)
+            storage.new(obj)
+            storage.save()
+        elif l[0] == "Place":
+            obj = Place()
+            print(obj.id)
+            storage.new(obj)
+            storage.save()
+        elif l[0] == "City":
+            obj = City()
+            print(obj.id)
+            storage.new(obj)
+            storage.save()
+        elif l[0] == "State":
+            obj = State()
             print(obj.id)
             storage.new(obj)
             storage.save()
