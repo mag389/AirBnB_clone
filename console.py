@@ -59,7 +59,7 @@ class HBNBCommand(cmd.Cmd):
             storage.new(obj)
             storage.save()
         else:
-            print("**class doesn't exist **")
+            print("** class doesn't exist **")
 
     def do_show(self, line):
         """prints string representation of object based on ID
