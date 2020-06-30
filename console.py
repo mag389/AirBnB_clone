@@ -148,8 +148,11 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
             return
 
-        setattr(storage.all()[key], l[2],
-                type(getattr(storage.all()[key], l[2]))(l[3]))
+        if l[2] in storage.all()[key].to_dict().keys():
+            setattr(storage.all()[key], l[2],
+                    type(getattr(storage.all()[key], l[2]))(l[3]))
+        else:
+            setattr(storage.all()[key], l[2], l[3])
         storage.all()[key].save()
 
 if __name__ == '__main__':
