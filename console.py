@@ -53,7 +53,7 @@ class HBNBCommand(cmd.Cmd):
             print(obj.id)
             storage.new(obj)
             storage.save()
-        if l[0] == "User":
+        elif l[0] == "User":
             obj = User()
             print(obj.id)
             storage.new(obj)
@@ -150,7 +150,7 @@ class HBNBCommand(cmd.Cmd):
 
         setattr(storage.all()[key], l[2],
                 type(getattr(storage.all()[key], l[2]))(l[3]))
-        storage.save()
+        storage.all()[key].save()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
