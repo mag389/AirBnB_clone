@@ -15,8 +15,7 @@ class BaseModel():
             """ Use dictionary to create an instance if given """
             for key, value in kwargs.items():
                 if key == '__class__':
-                    """ Converts class name string to object type """
-                    setattr(self, key, eval(value))
+                    setattr(self, key, type(self))
                 elif key == 'created_at' or key == 'updated_at':
                     """ Converts datetime string to datetime format """
                     setattr(self, key, dt.strptime(value,
