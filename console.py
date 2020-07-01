@@ -156,5 +156,35 @@ class HBNBCommand(cmd.Cmd):
             setattr(storage.all()[key], l[2], l[3])
         storage.all()[key].save()
 
+    def default(self, line):
+        """the all printer"""
+        l = line.split(".")
+        if len(l) < 2:
+            super().default(line)
+            return
+        if l[0] not in HBNBCommand.classes:
+            super().default(line)
+            return
+        if l[1] == "all()":
+            ret = []
+            printed = 0
+            print("[", end="")
+            for key in storage.all().keys():
+                if key[0:len(l[0])] == l[0]:
+                    if printed == 1:
+                        print(", ", end="")
+                    ret.append(str(storage.all()[key]))
+                    print(storage.all()[key], end="")
+            print("]")
+            return
+        if l[1] == "count()":
+            ret = 0
+            for key in storage.all().keys():
+                if key[0:len(l[0])] == l[0]:
+                    ret += 1
+            print(ret)
+            return
+        super().default(line)
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
