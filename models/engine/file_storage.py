@@ -44,5 +44,20 @@ class FileStorage():
                 if obj_dict['__class__'] == "User":
                     from models.user import User
                     self.new(User(**obj_dict))
+                if obj_dict['__class__'] == "City":
+                    from models.city import City
+                    self.new(City(**obj_dict))
+                if obj_dict['__class__'] == "Amenity":
+                    from models.amenity import Amenity
+                    self.new(Amenity(**obj_dict))
+                if obj_dict['__class__'] == "State":
+                    from models.state import State
+                    self.new(State(**obj_dict))
+                if obj_dict['__class__'] == "Place":
+                    from models.place import Place
+                    self.new(Place(**obj_dict))
+                if obj_dict['__class__'] == "Review":
+                    from models.review import Review
+                    self.new(Review(**obj_dict))
         except:
             pass
