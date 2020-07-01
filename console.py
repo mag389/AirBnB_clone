@@ -170,17 +170,20 @@ class HBNBCommand(cmd.Cmd):
             printed = 0
             print("[", end="")
             for key in storage.all().keys():
-                if key[0:len(l[0])] == l[0]:
+                # if key[0:len(l[0])] == l[0]:
+                if isinstance(storage.all()[key], HBNBCommand.classes[l[0]]):
                     if printed == 1:
                         print(", ", end="")
                     ret.append(str(storage.all()[key]))
                     print(storage.all()[key], end="")
+                    printed = 1
             print("]")
             return
         if l[1] == "count()":
             ret = 0
             for key in storage.all().keys():
-                if key[0:len(l[0])] == l[0]:
+                # if key[0:len(l[0])] == l[0]:
+                if isinstance(storage.all()[key], HBNBCommand.classes[l[0]]):
                     ret += 1
             print(ret)
             return
