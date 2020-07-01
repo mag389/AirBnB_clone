@@ -2,8 +2,6 @@
 """ User module """
 
 from models.base_model import BaseModel
-import uuid
-from datetime import datetime as dt
 
 
 class User(BaseModel):

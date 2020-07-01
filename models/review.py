@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 """review class file for defining reviews of places """
 from models.base_model import BaseModel
-import uuid
-from datetime import datetime as dt
 
 
 class Review(BaseModel):
