@@ -11,6 +11,7 @@ from models.review import Review
 from models.place import Place
 import shlex
 from models import storage
+import json
 
 
 class HBNBCommand(cmd.Cmd):
@@ -211,6 +212,32 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print("** no instance found **")
                 return
+        if l[1][0:6] == "update":
+            args = l[1][7:-1].split(", ")
+            for index in range(0, len(args)):
+                if args[index][0] == '"' and args[index][-1] == '"':
+                    args[index] = args[index][1:-1]
+
+            if len(args[0]) == 0:
+                print("** instance id missing **")
+                return
+            key = l[0] + "." + args[0]
+            if key not in storage.all().keys():
+                print("** no instance found **")
+                return
+            if len(args) < 2:
+                print("** attribute name missing **")
+                return
+            if len(args) < 3:
+                print("** value missing **")
+                return
+            if args[1] in storage.all()[key].to_dict().keys():
+                setattr(storage.all()[key], args[1],
+                        type(getattr(storage.all()[key], args[1]))(args[2]))
+            else:
+                setattr(storage.all()[key], args[1], args[2])
+            storage.all()[key].save()
+            return
 
         super().default(line)
 
