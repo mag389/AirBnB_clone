@@ -214,9 +214,7 @@ class HBNBCommand(cmd.Cmd):
                 return
         if l[1][0:6] == "update":
             if '{' in l[1]:
-                print("Dictionary spotted")
                 args = HBNBCommand.split_with_dict(l[1][7:-1])
-                print(args)
 
                 if len(args) < 1:
                     print("** instance id missing **")
@@ -228,7 +226,6 @@ class HBNBCommand(cmd.Cmd):
                 if len(args) < 2:
                     print("** attribute name missing **")
                     return
-                print("Doing update stuff")
                 dict_string = ""
                 for char in args[1]:
                     if char == "'":
@@ -245,7 +242,6 @@ class HBNBCommand(cmd.Cmd):
                     else:
                         setattr(storage.all()[key], attr_key, str(value))
                     storage.all()[key].save()
-                print("Done")
                 return
             else:
                 args = l[1][7:-1].split(", ")
