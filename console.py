@@ -187,6 +187,31 @@ class HBNBCommand(cmd.Cmd):
                     ret += 1
             print(ret)
             return
+        if l[1][0:4] == "show":
+            if len(l[1][4:]) < 3:
+                print("** instance id missing **")
+                return
+            id = l[1][5:-1]
+            key = l[0] + "." + id
+            if key in storage.all().keys():
+                print(storage.all()[key])
+                return
+            else:
+                print("** no instance found **")
+                return
+        if l[1][0:7] == "destroy":
+            if len(l[1][7:]) < 3:
+                print("** instance id missing **")
+                return
+            id = l[1][8:-1]
+            key = l[0] + "." + id
+            if key in storage.all().keys():
+                storage.all().pop(key)
+                return
+            else:
+                print("** no instance found **")
+                return
+
         super().default(line)
 
 if __name__ == '__main__':
