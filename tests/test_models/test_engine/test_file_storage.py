@@ -11,10 +11,12 @@ class Test_File_Storage(unittest.TestCase):
     """ FileStorage test class """
 
     def test_all(self):
+        """ Tests all function """
         storage = FileStorage()
         self.assertIsInstance(storage.all(), dict)
 
     def test_new(self):
+        """ Tests save function """
         storage = FileStorage()
         obj = BaseModel()
         storage.new(obj)
