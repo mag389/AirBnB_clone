@@ -37,3 +37,11 @@ class TestBase(unittest.TestCase):
         cdict["updated_at"] = str(bm3.updated_at.isoformat())
         cdict["id"] = bm3.id
         self.assertEqual(cdict, bm3.to_dict())
+    
+    def test_save(self):
+        """ Testing save """
+        bm4 = BaseModel()
+        old_update_at = bm4.updated_at
+        bm4.save()
+        new_updated_at = bm4.updated_at
+        self.assertNotEqual(old_update_at, new_updated_at)
