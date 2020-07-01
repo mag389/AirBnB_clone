@@ -159,7 +159,7 @@ class HBNBCommand(cmd.Cmd):
     def default(self, line):
         """the all printer"""
         l = line.split(".")
-        if len(l) < 2:
+        if len(l) != 2:
             super().default(line)
             return
         if l[0] not in HBNBCommand.classes:
