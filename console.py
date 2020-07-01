@@ -17,8 +17,9 @@ class HBNBCommand(cmd.Cmd):
     """ the bnb console class """
 
     prompt = "(hbnb) "
-    classes = ["BaseModel", "User", "State", "City",
-               "Amenity", "Place", "Review"]
+    classes = {"BaseModel": BaseModel, "User": User, "State": State,
+               "City": City, "Amenity": Amenity, "Place": Place,
+               "Review": Review}
 
     def preloop(self):
         """sets up the objects to be searchable by uid for deletion and
@@ -53,38 +54,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        if l[0] == "BaseModel":
-            obj = BaseModel()
-            print(obj.id)
-            storage.new(obj)
-            storage.save()
-        elif l[0] == "User":
-            obj = User()
-            print(obj.id)
-            storage.new(obj)
-            storage.save()
-        elif l[0] == "Amenity":
-            obj = Amenity()
-            print(obj.id)
-            storage.new(obj)
-            storage.save()
-        elif l[0] == "Review":
-            obj = Review()
-            print(obj.id)
-            storage.new(obj)
-            storage.save()
-        elif l[0] == "Place":
-            obj = Place()
-            print(obj.id)
-            storage.new(obj)
-            storage.save()
-        elif l[0] == "City":
-            obj = City()
-            print(obj.id)
-            storage.new(obj)
-            storage.save()
-        elif l[0] == "State":
-            obj = State()
+        if l[0] in HBNBCommand.classes:
+            obj = HBNBCommand.classes[l[0]]()
             print(obj.id)
             storage.new(obj)
             storage.save()
