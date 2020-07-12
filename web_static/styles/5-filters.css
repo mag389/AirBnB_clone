@@ -28,14 +28,12 @@
   width: 25%;
   border-right: 1px solid;
   border-color:#DDDDDD;
-  font-color: black;
   margin-left: 50px;
   margin-right: 50px;
 }
 .filters .amenities {
   height: 100%;
   width: 25%;
-  font-color: black;
 }
 .filters h3 {
   font-weight:600;
